@@ -11,8 +11,8 @@ from rest_framework.decorators import api_view
 @api_view(['GET', 'POST', 'DELETE'])
 def root(request):
     if request.method == 'GET':
-        first_root = Root.objects.first()
-        root_serializer = RootSerializer(first_root, many=False)
+        root = Root.objects.all()
+        root_serializer = RootSerializer(root, many=True)
         return JsonResponse(root_serializer.data, safe=False)
     elif request.method == 'POST':
         root_data = JSONParser().parse(request)

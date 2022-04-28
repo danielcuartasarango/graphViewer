@@ -26,7 +26,7 @@ class DataSerializer(WritableNestedModelSerializer):
         model = Data
         fields = ('ide', 'label', 'type', 'radius','linkedTo', 'coordenates')
 
-
+        
 
 
 
@@ -53,3 +53,10 @@ class RootSerializer(WritableNestedModelSerializer):
     class Meta:
         model = Root
         fields = ( 'graph', 'generalData1', 'generalData2', 'generalData3')
+
+        def create(self, validated_data):
+                tracks_data = validated_data.pop('graph')
+                graph = Root.objects.create(**validated_data)
+                for track_data in tracks_data:
+                    Graph.objects.create(graph=graph, **track_data)
+                return graph

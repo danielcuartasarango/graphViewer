@@ -1,6 +1,7 @@
-from django.conf.urls import url
+
 from algorithms import views
+from django.urls import  re_path
 
 urlpatterns = [
-    url(r'^api/root$', views.root),
+    re_path(r'^api/root$', views.root),
 ]
