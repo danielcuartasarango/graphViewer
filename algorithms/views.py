@@ -12,8 +12,10 @@ from rest_framework.decorators import api_view
 def root(request):
     if request.method == 'GET':
         root = Root.objects.all()
+
         root_serializer = RootSerializer(root, many=True)
         return JsonResponse(root_serializer.data, safe=False)
+
     elif request.method == 'POST':
         root_data = JSONParser().parse(request)
         root_serializer = RootSerializer( data=root_data)
@@ -22,6 +24,24 @@ def root(request):
             return JsonResponse(root_serializer.data, status=status.HTTP_201_CREATED)
         return JsonResponse(root_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
-
+@api_view(['GET', 'PUT', 'DELETE'])
+def root_detail(request, ide):
+    try: 
+        root = Root.objects.get(id=ide) 
+    except Root.DoesNotExist: 
+        return JsonResponse({'message': 'The graph does not exist'}, status=status.HTTP_404_NOT_FOUND) 
+   
+    if request.method == 'GET': 
+        root_serializer = RootSerializer(root) 
+        return JsonResponse(root_serializer.data) 
+    elif request.method == 'PUT': 
+        root_data = JSONParser().parse(request) 
+        root_serializer = RootSerializer(root, data=root_data) 
+        if root_serializer.is_valid(): 
+            root_serializer.save() 
+            return JsonResponse(root_serializer.data) 
+        return JsonResponse(root_serializer.errors, status=status.HTTP_400_BAD_REQUEST) 
+    elif request.method == 'DELETE': 
+        root.delete() 
+        return JsonResponse({'message': 'Graph was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)
 

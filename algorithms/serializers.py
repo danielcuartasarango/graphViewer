@@ -52,7 +52,7 @@ class RootSerializer(WritableNestedModelSerializer):
 
     class Meta:
         model = Root
-        fields = ( 'graph', 'generalData1', 'generalData2', 'generalData3')
+        fields = ('id', 'graph', 'generalData1', 'generalData2', 'generalData3')
 
         def create(self, validated_data):
                 tracks_data = validated_data.pop('graph')
