@@ -99,7 +99,7 @@ def PENDENT_PAIR(SS, VV, F):
     # The size of V goes from n to 2
     # Start with a random element in V
 
-    V_ = list(copy.copy(VV))
+    V_ = copy.copy(VV)
     print(VV,"a------------------",V_)
     rnd_pattern = np.random.permutation(len(V_))
     x = V_[rnd_pattern[0]]
@@ -109,8 +109,8 @@ def PENDENT_PAIR(SS, VV, F):
     else:
         W = [x]
 
-    Q = list(copy.copy(V_))
-    print(Q)
+    Q = copy.copy(V_)
+  
     Q.remove(x)
     V_.remove(x)
     for i in range(len(V_)):
