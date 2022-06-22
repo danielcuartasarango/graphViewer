@@ -3,16 +3,18 @@ from django.shortcuts import render
 from django.http.response import JsonResponse
 from rest_framework.parsers import JSONParser
 from rest_framework import status
+from sklearn.metrics import mutual_info_score
 
 from .models import    Root
 from .serializers import  RootSerializer
+from .algoritmos import *
+from .procedures import *
 from rest_framework.decorators import api_view
 
 @api_view(['GET', 'POST', 'DELETE'])
 def root(request):
     if request.method == 'GET':
         root = Root.objects.all()
-
         root_serializer = RootSerializer(root, many=True)
         return JsonResponse(root_serializer.data, safe=False)
 
@@ -33,6 +35,20 @@ def root_detail(request, ide):
    
     if request.method == 'GET': 
         root_serializer = RootSerializer(root) 
+        
+        m = matriz_ad(root_serializer.data)
+       
+        x= [[0, 1, 0, 1],
+            [1, 0, 0, 0],
+            [0, 0, 0, 1],
+            [1, 0, 1, 0]]
+        
+
+        
+        subset_opt, partition_value, cluster_max = QUEYRANNE(m,mutualInformation(np.array(x[0]),np.array(x[1])))
+        print(subset_opt, partition_value, cluster_max)
+
+
         return JsonResponse(root_serializer.data) 
     elif request.method == 'PUT': 
         root_data = JSONParser().parse(request) 
