@@ -72,12 +72,11 @@ def Find_Far_Element(SS, F, WW, QQ):
 
     # Find the most far element to WW in QQ
 
+   
     u = QQ[0]  # a list not an index
-    W_cp = list(copy.copy(WW))
+    W_cp = copy.copy(WW)
     W_cp.append(u)
-    print(W_cp)
-    A = F(SS, SS)
-    print(A,"A")
+    dist_max = F(SS, W_cp) - F(SS, u)
 
     
     elt_far = u
