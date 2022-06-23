@@ -13,12 +13,15 @@ def matriz_ad(data):
     
     x = 1
     for key in data2:
+       
         link = key.get("linkedTo")
         ye = [nodes.get("nodeId") for nodes in link]
         if len(ye)>0:
-            y = ye[0]
-            matriz[x-1][y-1] = 1
-            #matriz[y-1][x-1]=1
+            for k in ye:
+                print()
+                y = k
+                matriz[x-1][y-1] = 1
+                #matriz[y-1][x-1]=1
         x = x+1
        
-    return np.array(matriz.tolist())
+    return matriz
