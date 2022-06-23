@@ -1,3 +1,4 @@
+from tokenize import String
 from django.shortcuts import render
 
 from django.http.response import JsonResponse
@@ -38,14 +39,31 @@ def root_detail(request, ide):
         
         m = matriz_ad(root_serializer.data)
        
-        x= [[0, 1, 0, 1],
-            [1, 0, 0, 0],
-            [0, 0, 0, 1],
-            [1, 0, 1, 0]]
-        
+        x= np.array([
+            [0, 1, 0, 1],
+            [1, 1, 1, 0],
+            [1, 0, 1, 0],
+            [1, 1, 1, 0],
+            [1, 0, 0, 1],
+            [0, 1, 0, 1]])
+        print(m)
+        y= np.array([
+            [0, 1, 0, 1, 0, 0, 1],
+            [1, 0, 1, 0, 1, 0, 0],
+            [0, 1, 0, 0, 0, 0, 0],
+            [1, 0, 0, 0, 0, 0, 0],
+            [0, 1, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 1, 0],
+            [1, 0, 0, 0, 0, 1, 1]])
+        print(y)
 
         
-        subset_opt, partition_value, cluster_max = QUEYRANNE(m,mutualInformation(np.array(x[0]),np.array(x[1])))
+       
+        
+        f = lambda x, params : mutual_info_score(np.shape(m),np.shape(y))
+
+      
+        subset_opt, partition_value, cluster_max = QUEYRANNE(m,f)
         print(subset_opt, partition_value, cluster_max)
 
 

@@ -10,6 +10,7 @@ def matriz_ad(data):
     numNodes = len(states)
     matriz = np.zeros((numNodes, numNodes))
     
+    
     x = 1
     for key in data2:
         link = key.get("linkedTo")

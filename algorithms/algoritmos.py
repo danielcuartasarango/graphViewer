@@ -1,13 +1,15 @@
 import numpy as np
 import __future__ as division
 import numpy as np
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 import numpy.linalg as la
 import copy
-from collections import Sequence
+#from collections import Sequence
 from itertools import chain, count
 from scipy.linalg import block_diag
 from typing import Any
+
+#from sklearn.metrics import mutual_info_score
 
 
 # -*- Some useful preliminary functions -*-
@@ -72,10 +74,11 @@ def Find_Far_Element(SS, F, WW, QQ):
 
     # Find the most far element to WW in QQ
 
-   
+    print(F,"...............F1")
     u = QQ[0]  # a list not an index
     W_cp = copy.copy(WW)
     W_cp.append(u)
+   
     dist_max = F(SS, W_cp) - F(SS, u)
 
     
@@ -99,8 +102,7 @@ def PENDENT_PAIR(SS, VV, F):
     # The size of V goes from n to 2
     # Start with a random element in V
 
-    V_ = copy.copy(VV)
-    print(VV,"a------------------",V_)
+    V_ = list(copy.copy(VV))
     rnd_pattern = np.random.permutation(len(V_))
     x = V_[rnd_pattern[0]]
     #x = V_[0]
@@ -109,10 +111,11 @@ def PENDENT_PAIR(SS, VV, F):
     else:
         W = [x]
 
-    Q = copy.copy(V_)
-  
+    Q = list(copy.copy(V_))
+
     Q.remove(x)
     V_.remove(x)
+
     for i in range(len(V_)):
         elt_far = Find_Far_Element(SS, F, W, Q)
         W.append(elt_far)
@@ -170,7 +173,7 @@ def QUEYRANNE(SS, F):
    # # type: (matrix, function) -> (list, float, list)
 
     dim, _ = SS.shape
-    V = range(dim)  # is the space of points which is updated at each step we find a pendent pair
+    V = list(range(dim)) # is the space of points which is updated at each step we find a pendent pair
     C = []  # set of candidates updated at each step
     while len(V) >= 3:
         W = copy.deepcopy(V)
@@ -194,6 +197,7 @@ def QUEYRANNE(SS, F):
 
 
     #  Once we have the list of candidates, we return the best one
+    print(C,"------------")
     max_value = -np.Inf
     subset_opt = []
     cluster_max = 0
@@ -269,13 +273,13 @@ def build_MH_chain(init, stepsize, n_total, log_prob):
   return chain, acceptance_rate
 
 if __name__ == "__main__":
-    x=  np.array([1, 0, 1, 0,0,1])
+    x=  np.array([1,2,3,4,6,7,8])
  
-    chain, acceptance_rate = build_MH_chain(x, 3 , len(x), log_prob)
+    chain, acceptance_rate = build_MH_chain(x, 3 , 10, log_prob)
 
     print("Acceptance rate: {:.4f}".format(acceptance_rate))
     print(chain)
-
+    
 """  
 from re import M
 
