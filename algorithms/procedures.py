@@ -18,7 +18,7 @@ def matriz_ad(data):
         if len(ye)>0:
             y = ye[0]
             matriz[x-1][y-1] = 1
-            matriz[y-1][x-1]=1
+            #matriz[y-1][x-1]=1
         x = x+1
        
-    return matriz
+    return np.array(matriz.tolist())

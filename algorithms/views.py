@@ -40,30 +40,31 @@ def root_detail(request, ide):
         m = matriz_ad(root_serializer.data)
        
         x= np.array([
-            [0, 1, 0, 1],
-            [1, 1, 1, 0],
-            [1, 0, 1, 0],
-            [1, 1, 1, 0],
-            [1, 0, 0, 1],
-            [0, 1, 0, 1]])
-        print(m)
+            
+            [0, 0, 0],
+            [0, 0, 1],
+            [1, 0, 1]
+            ])
         y= np.array([
-            [0, 1, 0, 1, 0, 0, 1],
-            [1, 0, 1, 0, 1, 0, 0],
-            [0, 1, 0, 0, 0, 0, 0],
-            [1, 0, 0, 0, 0, 0, 0],
-            [0, 1, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 1, 0],
-            [1, 0, 0, 0, 0, 1, 1]])
+            [0, 0, 0],
+            [0, 0, 1],
+            [1, 0, 1],
+            [1, 0, 0],
+            [1, 0, 0],
+            [1, 1, 1],
+            [1, 0, 1]
+            ])
+        print(m)
+        
         print(y)
 
-        
+        print(mutual_info_score(np.shape(x),np.shape(y)))
        
         
-        f = lambda x, params : mutual_info_score(np.shape(m),np.shape(y))
+        f = lambda x, params : mutual_info_score(np.shape(x),np.shape(y))
 
       
-        subset_opt, partition_value, cluster_max = QUEYRANNE(m,f)
+        subset_opt, partition_value, cluster_max = QUEYRANNE(x,f)
         print(subset_opt, partition_value, cluster_max)
 
 
